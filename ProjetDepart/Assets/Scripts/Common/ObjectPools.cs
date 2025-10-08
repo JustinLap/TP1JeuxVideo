@@ -6,12 +6,14 @@ public class ObjectPools : MonoBehaviour
 {
     [Header("Entities")]
     [SerializeField] private ObjectPool alien;
+    [SerializeField] private ObjectPool bullet;
 
     [Header("Fx")]
     [SerializeField] private ObjectPool alienExplosion;
 
     // Entities
     public ObjectPool Alien => alien;
+    public ObjectPool Bullet => bullet;
 
     // Fx
     public ObjectPool AlienExplosion => alienExplosion;

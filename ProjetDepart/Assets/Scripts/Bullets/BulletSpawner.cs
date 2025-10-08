@@ -12,11 +12,16 @@ namespace Bullets
         [Header("Input")]
         [SerializeField] private InputActionReference shootAction;
 
+        private void Awake()
+        {
+            bulletObjectPool = Finder.ObjectPools.Bullet;
+        }
+        
         private void Update()
         {
             UpdateSpawning();
         }
-
+        
         private void UpdateSpawning()
         {
             if (shootAction.action.triggered)

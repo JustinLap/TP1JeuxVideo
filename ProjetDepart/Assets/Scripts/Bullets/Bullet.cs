@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Bullets
 {
@@ -13,6 +14,12 @@ namespace Bullets
             rigidbody = GetComponent<Rigidbody>();
         }
 
+        private void Update()
+        {
+            var forward = rigidbody.transform.forward;
+            rigidbody.linearVelocity = forward * speed;
+        }
+
         private void OnEnable()
         {
             rigidbody.position = Vector3.zero;
@@ -20,5 +27,11 @@ namespace Bullets
             rigidbody.linearVelocity = Vector3.zero;
             rigidbody.angularVelocity = Vector3.zero;
         }
+/*
+        private void OnTriggerEnter(Collider other)
+        {
+            var alien = other.GetComponent<Alien>();
+            if (alien == null) return;
+        }*/
     }
 }

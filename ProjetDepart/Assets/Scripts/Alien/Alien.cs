@@ -8,7 +8,7 @@ public class Alien : MonoBehaviour
     // [SerializeField] private int damagePlayer = 10;
 
     private NavMeshAgent agent;
-    private SpaceMarine spaceMarine; 
+    private SpaceMarine.SpaceMarine spaceMarine;
 
     void Awake()
     {
@@ -23,7 +23,7 @@ public class Alien : MonoBehaviour
             agent.angularSpeed = rotationSpeed;
         }
 
-        spaceMarine = FindAnyObjectByType<SpaceMarine>();
+        spaceMarine = FindAnyObjectByType<SpaceMarine.SpaceMarine>();
     }
 
     void Update()
@@ -37,7 +37,7 @@ public class Alien : MonoBehaviour
     //Dommages (à compléter)
     void OnCollisionEnter(Collision other)
     {
-        var marine = other.gameObject.GetComponent<SpaceMarine>();
+        var marine = other.gameObject.GetComponent<SpaceMarine.SpaceMarine>();
         if (marine != null)
         {
 

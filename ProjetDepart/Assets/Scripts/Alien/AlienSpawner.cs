@@ -12,10 +12,8 @@ public class AlienSpawner : MonoBehaviour
 
     private void Awake()
     {
-        if (alienPool == null)
-        {
-            alienPool = Finder.ObjectPools.Alien;
-        }
+
+        alienPool = Finder.ObjectPools.Alien;
     }
 
     private void Start()

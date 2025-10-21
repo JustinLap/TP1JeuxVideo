@@ -107,16 +107,16 @@ namespace SpaceMarine
                 invulnerabilityTime -= Time.deltaTime;
             }
         }
-
+/*
         private void OnCollisionEnter(Collision other)
         {
             //var alien = other.gameObject.GetComponent<Alien>();
-            if (!IsInvulnerable() /*&& alien*/)
+            if (!IsInvulnerable() && alien)
             {
                 lifePoints -= 10;
                 invulnerable = true;
             }
-        }
+        }*/
 
         private bool IsInvulnerable()
         {

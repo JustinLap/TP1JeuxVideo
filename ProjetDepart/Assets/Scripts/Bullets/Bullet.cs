@@ -9,9 +9,15 @@ namespace Bullets
         
         private new Rigidbody rigidbody;
 
+        [Header("Pools")]
+        private ObjectPool bulletObjectPool;
+        private ObjectPool alienObjectPool;
+
         private void Awake()
         {
             rigidbody = GetComponent<Rigidbody>();
+            bulletObjectPool = Finder.ObjectPools.Bullet;
+            alienObjectPool = Finder.ObjectPools.Alien;
         }
 
         private void Update()
@@ -27,11 +33,23 @@ namespace Bullets
             rigidbody.linearVelocity = Vector3.zero;
             rigidbody.angularVelocity = Vector3.zero;
         }
-/*
+
         private void OnTriggerEnter(Collider other)
         {
+            bulletObjectPool.Release(gameObject);
+            
             var alien = other.GetComponent<Alien>();
             if (alien == null) return;
-        }*/
+            
+            alienObjectPool.Release(alien.gameObject);
+            
+            var alienSpawner = FindAnyObjectByType<AlienSpawner>();
+            if (alienSpawner == null) return;
+            alienSpawner.OnAlienKilled();
+            
+            var portal = other.GetComponent<Portal>();
+            if (portal == null) return;
+            portal.TakeDamage();
+        }
     }
 }

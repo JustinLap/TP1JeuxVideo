@@ -23,20 +23,28 @@ public class AlienSpawner : MonoBehaviour
 
     private IEnumerator SpawnRoutine()
     {
-        while (alienCount < alienLimit)
+        while (true)
         {
-            int randomIndex = Random.Range(0, spawnPoints.Length);
-            Portal chosenPortal = spawnPoints[randomIndex];
-
-            GameObject alien = alienPool.Get();
-            if (alien != null)
+            if (alienCount < alienLimit)
             {
-                alien.transform.SetPositionAndRotation(chosenPortal.transform.position,chosenPortal.transform.rotation);
+                int randomIndex = Random.Range(0, spawnPoints.Length);
+                Portal chosenPortal = spawnPoints[randomIndex];
 
-                alienCount++;
+                GameObject alien = alienPool.Get();
+                if (alien != null)
+                {
+                    alien.transform.SetPositionAndRotation(chosenPortal.transform.position,chosenPortal.transform.rotation);
+
+                    alienCount++;
+                }
             }
 
             yield return new WaitForSeconds(spawnDelay);
         }
+    }
+
+    public void OnAlienKilled()
+    {
+        alienCount--;
     }
 }

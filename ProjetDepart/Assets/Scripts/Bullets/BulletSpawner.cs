@@ -15,7 +15,9 @@ namespace Bullets
         private void Awake()
         {
             if (bulletObjectPool == null)
-            bulletObjectPool = Finder.ObjectPools.Bullet;
+            {
+                bulletObjectPool = Finder.ObjectPools.Bullet;
+            }
         }
         
         private void Update()

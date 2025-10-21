@@ -28,13 +28,12 @@ public class Alien : MonoBehaviour
 
     void Update()
     {
-        if (spaceMarine != null && agent != null)
-        {
-            agent.SetDestination(spaceMarine.transform.position);
-        }
+        if (spaceMarine == null || agent == null || !agent.isOnNavMesh) return;
+        
+        agent.SetDestination(spaceMarine.transform.position);
     }
 
-    //Dommages (à compléter)
+    //Dommages (ï¿½ complï¿½ter)
     void OnCollisionEnter(Collision other)
     {
         var marine = other.gameObject.GetComponent<SpaceMarine.SpaceMarine>();
@@ -43,4 +42,5 @@ public class Alien : MonoBehaviour
 
         }
     }
+    
 }

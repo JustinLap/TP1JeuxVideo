@@ -1,16 +1,27 @@
 using UnityEngine;
 
-public class Portal : MonoBehaviour
+public class Portal : MonoBehaviour, IHurtable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private int health = 10;
+
+    private void OnEnable()
     {
-        
+        var tracker = FindFirstObjectByType<PortalTracker>();
+        tracker?.RegisterPortal(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        var tracker = FindFirstObjectByType<PortalTracker>();
+        tracker?.UnregisterPortal(this);
+    }
+
+    public void Hurt(int amount)
+    {
+        health -= amount;
+        if (health <= 0)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

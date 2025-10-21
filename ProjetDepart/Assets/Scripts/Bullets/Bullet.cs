@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 namespace Bullets
@@ -27,11 +28,18 @@ namespace Bullets
             rigidbody.linearVelocity = Vector3.zero;
             rigidbody.angularVelocity = Vector3.zero;
         }
-/*
-        private void OnTriggerEnter(Collider other)
+        private void OnCollisionEnter(Collision other)
         {
-            var alien = other.GetComponent<Alien>();
-            if (alien == null) return;
-        }*/
+            var portal = other.gameObject.GetComponent <Portal>();
+            if (portal == null) return;
+           // portal.Hit();
+        }
+
+        /*
+                private void OnTriggerEnter(Collider other)
+                {
+                    var alien = other.GetComponent<Alien>();
+                    if (alien == null) return;
+                }*/
     }
 }

@@ -1,26 +1,27 @@
 using UnityEngine;
 
-public class Portal : MonoBehaviour
+public class Portal : MonoBehaviour, IHurtable
 {
-    [SerializeField] private int maxHealth = 10;
-    private int currentHealth;
-    private void Awake()
+    [SerializeField] private int health = 10;
+
+    private void OnEnable()
     {
-        currentHealth = maxHealth;
+        var tracker = FindFirstObjectByType<PortalTracker>();
+        tracker?.RegisterPortal(this);
     }
 
-    public void TakeDamage()
+    private void OnDisable()
     {
-        currentHealth--;
+        var tracker = FindFirstObjectByType<PortalTracker>();
+        tracker?.UnregisterPortal(this);
+    }
 
-        if (currentHealth <= 0)
+    public void Hurt(int amount)
+    {
+        health -= amount;
+        if (health <= 0)
         {
-            Die();
+            gameObject.SetActive(false);
         }
-    }
-
-    private void Die()
-    {
-        gameObject.SetActive(false);
     }
 }

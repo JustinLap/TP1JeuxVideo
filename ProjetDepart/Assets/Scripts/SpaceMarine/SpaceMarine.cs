@@ -13,7 +13,7 @@ namespace SpaceMarine
         
         [Header("Life points")]
         [SerializeField] private int startLifePoints = 50;
-        [SerializeField] private int maxLifePoints = 100;
+        //[SerializeField] private int maxLifePoints = 100;
         [SerializeField] private int lifePoints;
         [SerializeField] private bool dead;
         

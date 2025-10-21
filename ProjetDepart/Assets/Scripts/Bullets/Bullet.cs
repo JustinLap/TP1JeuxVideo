@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 namespace Bullets
@@ -6,6 +7,7 @@ namespace Bullets
     public class Bullet : MonoBehaviour
     {
         [SerializeField] private float speed = 200f;
+        [SerializeField] private int damage = 1;
         
         private new Rigidbody rigidbody;
 
@@ -49,7 +51,7 @@ namespace Bullets
             
             var portal = other.GetComponent<Portal>();
             if (portal == null) return;
-            portal.TakeDamage();
+            portal.Hurt(damage);
         }
     }
 }

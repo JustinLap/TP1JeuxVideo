@@ -531,8 +531,87 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7627524841244000393}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2469668914405986032, guid: 03bbfab88ae8ef44b8eb95f695b66856,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7464295587386815704}
+    - targetCorrespondingSourceObject: {fileID: 2469668914405986032, guid: 03bbfab88ae8ef44b8eb95f695b66856,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3444445660119236836}
+    - targetCorrespondingSourceObject: {fileID: 2469668914405986032, guid: 03bbfab88ae8ef44b8eb95f695b66856,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4743555967463640841}
   m_SourcePrefab: {fileID: 100100000, guid: 03bbfab88ae8ef44b8eb95f695b66856, type: 3}
+--- !u!1 &1973904959589787284 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2469668914405986032, guid: 03bbfab88ae8ef44b8eb95f695b66856,
+    type: 3}
+  m_PrefabInstance: {fileID: 4117062812940200036}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &-7464295587386815704
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973904959589787284}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &3444445660119236836
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973904959589787284}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-4743555967463640841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1973904959589787284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf3618ed92f64631bdc4b57d24d5314b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Collectibles.Collectible
+  collectibleSound: {fileID: 8300000, guid: 55bc10006917fbe46a89f70a93cd4e1f, type: 3}
 --- !u!4 &7411532081775876908 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6915756588001981256, guid: 03bbfab88ae8ef44b8eb95f695b66856,

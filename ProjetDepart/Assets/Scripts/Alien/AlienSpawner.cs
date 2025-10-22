@@ -12,7 +12,6 @@ public class AlienSpawner : MonoBehaviour
 
     private void Awake()
     {
-
         alienPool = Finder.ObjectPools.Alien;
     }
 
@@ -33,7 +32,7 @@ public class AlienSpawner : MonoBehaviour
                 GameObject alien = alienPool.Get();
                 if (alien != null)
                 {
-                    alien.transform.SetPositionAndRotation(chosenPortal.transform.position,chosenPortal.transform.rotation);
+                    alien.transform.SetPositionAndRotation(chosenPortal.transform.position, chosenPortal.transform.rotation);
 
                     alienCount++;
                 }

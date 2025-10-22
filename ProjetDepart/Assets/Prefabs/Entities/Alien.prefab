@@ -826,7 +826,6 @@ GameObject:
   - component: {fileID: 1841901769605393454}
   - component: {fileID: 5178435338629015573}
   - component: {fileID: -2503836595841870054}
-  - component: {fileID: -8806393282794733475}
   - component: {fileID: -1381080816623958724}
   - component: {fileID: -3846233845460015813}
   - component: {fileID: 6178339474825824912}
@@ -904,35 +903,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185ceaad806d402498fd2a2fbeb342ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Alien
+  health: 1
   moveSpeed: 10
   rotationSpeed: 120
---- !u!54 &-8806393282794733475
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5560088966813479041}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  damagePlayer: 10
+  alienExplosion: {fileID: 8300000, guid: 8f252cb39a2a2da44aefd3d09599af53, type: 3}
 --- !u!195 &-1381080816623958724
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -997,7 +972,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

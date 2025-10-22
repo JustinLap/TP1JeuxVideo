@@ -6,6 +6,7 @@ public static class Finder
 {
     private static EventChannels eventChannels;
     private static ObjectPools objectPools;
+    private static SpaceMarine.SpaceMarine spaceMarine;
 
     public static EventChannels EventChannels
     {
@@ -24,6 +25,16 @@ public static class Finder
             if (objectPools == null)
                 objectPools = FindWithTag<ObjectPools>("GameController");
             return objectPools;
+        }
+    }
+    
+    public static SpaceMarine.SpaceMarine SpaceMarine
+    {
+        get
+        {
+            if (spaceMarine == null)
+                spaceMarine = FindWithTag<SpaceMarine.SpaceMarine>("Player");
+            return spaceMarine;
         }
     }
 

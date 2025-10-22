@@ -8,61 +8,67 @@ namespace Bullets
         [SerializeField] private float speed = 200f;
         [SerializeField] private int damage = 10;
         [SerializeField] private float explosionRadius = 20f;
-        [SerializeField] private float lifetime = 5f;
+        [SerializeField] private AudioClip explosion;
 
-        private Rigidbody rb;
+        private new Rigidbody rigidbody;
         private float deathTime;
+        
+        private AudioSource audioSource;
+        
+        [Header("Pools")]
+        private ObjectPool missileObjectPool;
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody>();
-        }
-
-        private void OnEnable()
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            deathTime = Time.time + lifetime;
+            rigidbody = GetComponent<Rigidbody>();
+            missileObjectPool = Finder.ObjectPools.Missile;
+            
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
         }
 
         private void Update()
         {
-            rb.linearVelocity = transform.forward * speed;
+            var forward = rigidbody.transform.forward;
+            rigidbody.linearVelocity = forward * speed;
+        }
 
-            if (Time.time >= deathTime)
-                Explode();
+        private void OnEnable()
+        {
+            rigidbody.linearVelocity = rigidbody.transform.forward * speed;
+            rigidbody.angularVelocity = Vector3.zero;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            Explode();
+            Explode(other);
+            
+            audioSource.PlayOneShot(explosion);
+            missileObjectPool.Release(gameObject);
         }
 
-        private void Explode()
+        private void Explode(Collider other)
         {
-            Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius);
+            Collider[] hits = Physics.OverlapSphere(rigidbody.transform.position, explosionRadius);
+
             foreach (var hit in hits)
             {
-                Alien alien = hit.GetComponent<Alien>();
+                var alien = hit.GetComponent<Alien>();
                 if (alien != null)
                 {
+                    alien.Hurt(damage);
                     continue;
                 }
 
-                Portal portal = hit.GetComponent<Portal>();
+                var portal = hit.GetComponent<Portal>();
                 if (portal != null)
                 {
-                    //portal.Hit();
+                    portal.Hurt(damage);
                 }
             }
-
-            gameObject.SetActive(false);
-        }
-
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, explosionRadius);
         }
     }
 }

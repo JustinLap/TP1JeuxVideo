@@ -6,16 +6,28 @@ using UnityEngine.Events;
 
 public class EventChannels : MonoBehaviour
 {
-    [SerializeField] private UnityEvent onLevelEnd = new();
+    [SerializeField] private UnityEvent onLevelLose = new();
+    [SerializeField] private UnityEvent onLevelWin = new();
 
-    public event UnityAction OnLevelEnd
+    public event UnityAction OnLevelLose
     {
-        add => onLevelEnd.AddListener(value);
-        remove => onLevelEnd.RemoveListener(value);
+        add => onLevelLose.AddListener(value);
+        remove => onLevelLose.RemoveListener(value);
     }
 
-    public void PublishLevelEnd()
+    public void PublishLevelLose()
     {
-        onLevelEnd.Invoke();
+        onLevelLose.Invoke();
+    }
+    
+    public event UnityAction OnLevelWin
+    {
+        add => onLevelWin.AddListener(value);
+        remove => onLevelWin.RemoveListener(value);
+    }
+
+    public void PublishLevelWin()
+    {
+        onLevelWin.Invoke();
     }
 }

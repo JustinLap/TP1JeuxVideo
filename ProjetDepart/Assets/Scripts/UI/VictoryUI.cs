@@ -9,19 +9,24 @@ public class VictoryUI : MonoBehaviour
 
     private void OnEnable()
     {
-        Finder.EventChannels.OnLevelEnd += ShowVictory;
+        Finder.EventChannels.OnLevelWin += ShowVictory;
     }
 
     private void OnDisable()
     {
-        Finder.EventChannels.OnLevelEnd -= ShowVictory;
+        Finder.EventChannels.OnLevelWin -= ShowVictory;
     }
 
     private void ShowVictory()
     {
         victoryPanel.SetActive(true);
         victoryText.text = "Victoire !";
-        victoryText.color = new Color(73f / 255f, 255f / 255f, 122f / 255f);
+        
+        Color color;
+        if (ColorUtility.TryParseHtmlString("#49FF7A", out color))
+        {
+            victoryText.color = color;
+        }
         victoryText.fontSize = 200;
         victoryMusic?.Play();
     }

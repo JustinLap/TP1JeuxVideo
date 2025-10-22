@@ -1716,6 +1716,17 @@ PrefabInstance:
       propertyPath: bulletObjectPool
       value: 
       objectReference: {fileID: 469491221}
+    - target: {fileID: 5640013194527328598, guid: f907190e8981be544ae03a709268766b,
+        type: 3}
+      propertyPath: missileObjectPool
+      value: 
+      objectReference: {fileID: 2013841198}
+    - target: {fileID: 5640013194527328598, guid: f907190e8981be544ae03a709268766b,
+        type: 3}
+      propertyPath: shootMissileAction
+      value: 
+      objectReference: {fileID: 1210428309368471875, guid: 04cc15706f63de54b99fedd88a3cbe71,
+        type: 3}
     - target: {fileID: 6273260706107449040, guid: f907190e8981be544ae03a709268766b,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.ConstrainedExecution;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Bullets
 {
@@ -13,13 +11,11 @@ namespace Bullets
 
         [Header("Pools")]
         private ObjectPool bulletObjectPool;
-        private ObjectPool alienObjectPool;
 
         private void Awake()
         {
             rigidbody = GetComponent<Rigidbody>();
             bulletObjectPool = Finder.ObjectPools.Bullet;
-            alienObjectPool = Finder.ObjectPools.Alien;
         }
 
         private void Update()
@@ -30,9 +26,7 @@ namespace Bullets
 
         private void OnEnable()
         {
-            rigidbody.position = Vector3.zero;
-            rigidbody.rotation = Quaternion.identity;
-            rigidbody.linearVelocity = Vector3.zero;
+            rigidbody.linearVelocity = rigidbody.transform.forward * speed;
             rigidbody.angularVelocity = Vector3.zero;
         }
 
@@ -41,13 +35,11 @@ namespace Bullets
             bulletObjectPool.Release(gameObject);
             
             var alien = other.GetComponent<Alien>();
-            if (alien == null) return;
-            
-            alienObjectPool.Release(alien.gameObject);
-            
-            var alienSpawner = FindAnyObjectByType<AlienSpawner>();
-            if (alienSpawner == null) return;
-            alienSpawner.OnAlienKilled();
+            if (alien != null)
+            {
+                alien.Hurt(damage);
+                return;
+            }
             
             var portal = other.GetComponent<Portal>();
             if (portal == null) return;

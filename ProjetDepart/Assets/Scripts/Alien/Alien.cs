@@ -9,12 +9,25 @@ public class Alien : MonoBehaviour, IHurtable
     [SerializeField] private int rotationSpeed = 120;
     [SerializeField] private int damagePlayer = 10;
 
+    [SerializeField] private AudioClip alienExplosion;
+
     private NavMeshAgent agent;
     private SpaceMarine.SpaceMarine spaceMarine;
+    
+    private ObjectPool objectPool;
+    
+    private AudioSource audioSource;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        objectPool = Finder.ObjectPools.Alien;
+        
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     private void Start()
@@ -35,14 +48,14 @@ public class Alien : MonoBehaviour, IHurtable
         agent.SetDestination(spaceMarine.transform.position);
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
-        var marine = other.gameObject.GetComponent<SpaceMarine.SpaceMarine>();
+        var marine = other.GetComponent<SpaceMarine.SpaceMarine>();
         if (marine != null)
         {
-            // marine.Hurt(damagePlayer);
+            marine.Hurt(damagePlayer);
 
-            //  Die();
+            Die();
         }
     }
 
@@ -57,11 +70,17 @@ public class Alien : MonoBehaviour, IHurtable
 
     private void Die()
     {
-        var explosion = Finder.ObjectPools.AlienExplosion.Get();
-        explosion.transform.position = transform.position;
+        if (agent != null)
+        {
+            agent.enabled = false;
+        }
 
-        // Finder.Audio.Play("AlienExplosion");
+        var alienSpawner = FindAnyObjectByType<AlienSpawner>();
+        if (alienSpawner != null)
+        {
+            alienSpawner.OnAlienKilled();
+        }
 
-        gameObject.SetActive(false);
+        objectPool.Release(gameObject);
     }
 }

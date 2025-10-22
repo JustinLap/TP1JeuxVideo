@@ -18,15 +18,7 @@ public class PortalTracker : MonoBehaviour
 
         if (activePortals.Count == 0)
         {
-            Finder.EventChannels.PublishLevelEnd();
+            Finder.EventChannels.PublishLevelWin();
         }
     }
-
-    public Portal GetRandomPortal()
-    {
-        if (activePortals.Count == 0) return null;
-        return activePortals[Random.Range(0, activePortals.Count)];
-    }
-
-    public bool HasActivePortals() => activePortals.Count > 0;
 }

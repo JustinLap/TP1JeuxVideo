@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace SpaceMarine
 {
-    public class SpaceMarine : MonoBehaviour
+    public class SpaceMarine : MonoBehaviour, IHurtable
     {
         [Header("Movement")]
         [SerializeField] private float speed = 25f;
@@ -12,18 +12,34 @@ namespace SpaceMarine
         [SerializeField] private float jumpHeight = 10f;
         
         [Header("Life points")]
+        [SerializeField] private int healthPoints = 25;
         [SerializeField] private int startLifePoints = 50;
-        //[SerializeField] private int maxLifePoints = 100;
+        [SerializeField] private int maxLifePoints = 100;
         [SerializeField] private int lifePoints;
         [SerializeField] private bool dead;
         
+        public int LifePoints => lifePoints;
+
+        [Header("Munitions")]
+        [SerializeField] private int missilesAmount;
+        [SerializeField] private int missilesMax = 10;
+        
+        public int MissilesAmount => missilesAmount;
+        
         [Header("Invulnerability")]
+        [SerializeField] private float armorDuration = 5f;
+        [SerializeField] private float invulnerabilityDuration = 1.5f;
         [SerializeField] private float invulnerabilityTime;
         [SerializeField] private bool invulnerable;
         
         [Header("Inputs")]
         [SerializeField] private InputActionReference moveAction;
         [SerializeField] private InputActionReference jumpAction;
+        
+        [Header("Audio")]
+        [SerializeField] private AudioClip deathSound;
+        [SerializeField] private AudioClip hurtSound;
+        private AudioSource audioSource;
         
         private CharacterController characterController;
         private float verticalVelocity;
@@ -32,6 +48,12 @@ namespace SpaceMarine
         {
             Cursor.lockState = CursorLockMode.Locked;
             characterController = GetComponent<CharacterController>();
+            
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
         }
 
         private void Start()
@@ -39,6 +61,7 @@ namespace SpaceMarine
             lifePoints = startLifePoints;
             dead = false;
             invulnerable = false;
+            missilesAmount = 0;
         }
 
         private void Update()
@@ -49,9 +72,14 @@ namespace SpaceMarine
             var forward = cameraTransform.forward;
             var right = cameraTransform.right;
             
-            if (lifePoints <= 0)
+            forward.y = 0;
+            right.y = 0;
+            
+            if (!dead && lifePoints <= 0)
             {
                 dead = true;
+                Finder.EventChannels.PublishLevelLose();
+                audioSource.PlayOneShot(deathSound);
             }
             
             // Lire les entrées du joueur.
@@ -102,40 +130,56 @@ namespace SpaceMarine
             // Appliquer le mouvement.
             characterController.Move(horizontalMovement + verticalMovement);
             
-            if (IsInvulnerable())
+            if (invulnerable)
             {
                 invulnerabilityTime -= Time.deltaTime;
+                if (invulnerabilityTime <= 0f)
+                {
+                    invulnerable = false;
+                    invulnerabilityTime = 0f;
+                }
             }
         }
-/*
-        private void OnCollisionEnter(Collision other)
-        {
-            //var alien = other.gameObject.GetComponent<Alien>();
-            if (!IsInvulnerable() && alien)
-            {
-                lifePoints -= 10;
-                invulnerable = true;
-            }
-        }*/
 
-        private bool IsInvulnerable()
+        public void MissileShot()
         {
-            if (invulnerabilityTime <= 0)
-            {
-                invulnerabilityTime = 1.5f;
-                invulnerable = false;
-            }
-            else
-            {
-                invulnerable = true;
-            }
-
-            return invulnerable;
+            missilesAmount--;
         }
 
-        public bool IsDead()
+        public void Hurt(int damage)
         {
-            return dead;
+            if (invulnerable) return;
+            
+            lifePoints -= damage;
+            
+            invulnerable = true;
+            invulnerabilityTime = invulnerabilityDuration;
+            
+            audioSource.PlayOneShot(hurtSound);
+        }
+
+        public void Heal()
+        {
+            lifePoints += healthPoints;
+            if (lifePoints > maxLifePoints)
+            {
+                lifePoints = maxLifePoints;
+            }
+        }
+
+        public void AddMissiles()
+        {
+            missilesAmount += 5;
+            if (missilesAmount >= missilesMax)
+            {
+                missilesAmount = missilesMax;
+            }
+        }
+
+        public void AddArmor()
+        {
+            invulnerable = true;
+            invulnerabilityTime = armorDuration;
         }
     }
 }
